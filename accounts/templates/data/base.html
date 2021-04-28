@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="Responsive Bootstrap 4 Admin &amp; Dashboard Template">
+      <meta name="author" content="Bootlab">
+      {% block title %}
+      <title>Listing</title>
+      {% endblock %}
+      <link rel="preconnect" href="//fonts.gstatic.com/" crossorigin>
+      <!-- PICK ONE OF THE STYLES BELOW -->
+      <link rel="stylesheet" type="text/css" href="{% static 'css/admin_panel/common_css/classic.css' %}" >
+      <style type="text/css">
+         @media (min-width: 1200px){
+         .settings {
+         display: none;
+         }}
+         .simplebar-mask, .simplebar-offset {
+         display: none;
+         }
+         .settings.open .settings-panel {
+         right: 0;
+         display: none;
+         }
+         .main {
+         	background: cadetblue;
+         }
+      </style>
+      <!-- BEGIN SETTINGS -->
+      <!-- You can remove this after picking a style -->
+      <style>
+         body {
+         opacity: 0;
+         }
+      </style>
+      <script src="{% static 'js/admin_panel/common_js/settings.js' %}"></script>
+      {% block head %}
+      {% endblock %}
+      <!-- END SETTINGS -->
+   </head>
+
+   <body>
+      {% block content %}
+      {% endblock %}
+
+
+      <script src="{% static 'js/admin_panel/common_js/app.js' %}"></script>
+   </body>
+</html>
