@@ -1,0 +1,6 @@
+__pycache__
+old_scripts
+*.txt
+*.log
+.env
+test__*
