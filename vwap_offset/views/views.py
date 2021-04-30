@@ -25,49 +25,9 @@ class SavingDataIntoDb(APIView):
                 context['status'] = 403
                 return JsonResponse(context)
 
-            open_dt = self.request.data.get('open_dt')
-            if not open_dt:
-                context['message'] = 'Please Fill out Open Field Value'
-                context['status'] = 100
-                return JsonResponse(context)
-
-            high = self.request.data.get('high')
-            if not high:
-                context['message'] = 'Please Fill out High Field Value'
-                context['status'] = 100
-                return JsonResponse(context)
-
-
-            low = self.request.data.get('low')
-            if not low:
-                context['message'] = 'Please Fill out Low Field Value'
-                context['status'] = 100
-                return JsonResponse(context)
-
-
-            close = self.request.data.get('close')
-            if not close:
-                context['message'] = 'Please Fill out Close Field Value'
-                context['status'] = 100
-                return JsonResponse(context)
-
-
-            exchange = self.request.data.get('exchange')
-            if not exchange:
-                context['message'] = 'Exchange Field is required'
-                context['status'] = 100
-                return JsonResponse(context)
-
-
             ticker = self.request.data.get('ticker')
             if not ticker:
                 context['message'] = 'Ticker Field is required'
-                context['status'] = 100
-                return JsonResponse(context)
-
-            volume = self.request.data.get('volume')
-            if not volume:
-                context['message'] = 'Volume Field is required'
                 context['status'] = 100
                 return JsonResponse(context)
 
@@ -85,7 +45,7 @@ class SavingDataIntoDb(APIView):
 
 
             pair, _ = Pair.objects.get_or_create(ticker = ticker)
-            Vwap.objects.create(pair = pair, open_dt = open_dt,high = high, low = low, close = close, exchange = exchange, volume = volume, price_time = dateparser.parse(price_time), vwap = vwap)
+            Vwap.objects.create(pair = pair, price_time = dateparser.parse(price_time), vwap = vwap)
             context['message'] = 'Success ! Data has been successfully saved into our database'
             context['status'] = 200
             return JsonResponse(context)
