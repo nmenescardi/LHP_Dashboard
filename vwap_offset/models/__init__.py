@@ -1,3 +1,4 @@
-from .models import VwapData
+from .models import Vwap
+from .models import Pair
 
-__all__ = ['VwapData']
+__all__ = ['Vwap', 'Pair']

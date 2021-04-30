@@ -2,7 +2,8 @@ from rest_framework.views import APIView
 from django.views import View
 import ast,sys,json,dateparser
 from django.conf import settings
-from vwap_offset.models import VwapData
+from vwap_offset.models import Vwap
+from vwap_offset.models import Pair
 from django.http.response import JsonResponse
 from django.utils import timezone
 from django.shortcuts import render,redirect
@@ -83,17 +84,18 @@ class SavingDataIntoDb(APIView):
                 return JsonResponse(context)
 
 
-            check_if_duplicate = VwapData.objects.filter(ticker = ticker, price_time = dateparser.parse(price_time))
+            """ check_if_duplicate = Vwap.objects.filter(ticker = ticker, price_time = dateparser.parse(price_time))
             if check_if_duplicate:
                 context['message'] = 'Error ! Combination of date price and Ticker is already in use'
                 context['status'] = 100
-                return JsonResponse(context)
+                return JsonResponse(context) """
 
 
-
-
-
-            VwapData.objects.create(open_dt = open_dt,high = high, low = low, close = close, exchange = exchange, ticker = ticker, volume = volume, price_time = dateparser.parse(price_time), vwap = vwap)
+            pair, _ = Pair.objects.get_or_create(ticker = ticker)
+            print(pair)
+            print(pair.ticker)
+            vwap = Vwap(pair = pair, open_dt = open_dt,high = high, low = low, close = close, exchange = exchange, volume = volume, price_time = dateparser.parse(price_time), vwap = vwap)
+            vwap.save()
             context['message'] = 'Success ! Data has been successfully saved into our database'
             context['status'] = 200
             return JsonResponse(context)
@@ -116,7 +118,7 @@ class DashboardView(View):
     def get(self,request):
 
         try:
-            all_data_list = VwapData.objects.all().order_by(Lower('price_time').desc())
+            all_data_list = Vwap.objects.all().order_by(Lower('price_time').desc())
             ticker_list = []
             all_data = []
             for one_data in all_data_list:
