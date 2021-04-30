@@ -84,18 +84,8 @@ class SavingDataIntoDb(APIView):
                 return JsonResponse(context)
 
 
-            """ check_if_duplicate = Vwap.objects.filter(ticker = ticker, price_time = dateparser.parse(price_time))
-            if check_if_duplicate:
-                context['message'] = 'Error ! Combination of date price and Ticker is already in use'
-                context['status'] = 100
-                return JsonResponse(context) """
-
-
             pair, _ = Pair.objects.get_or_create(ticker = ticker)
-            print(pair)
-            print(pair.ticker)
-            vwap = Vwap(pair = pair, open_dt = open_dt,high = high, low = low, close = close, exchange = exchange, volume = volume, price_time = dateparser.parse(price_time), vwap = vwap)
-            vwap.save()
+            vwap, _ = Vwap.objects.get_or_create(pair = pair, open_dt = open_dt,high = high, low = low, close = close, exchange = exchange, volume = volume, price_time = dateparser.parse(price_time), vwap = vwap)
             context['message'] = 'Success ! Data has been successfully saved into our database'
             context['status'] = 200
             return JsonResponse(context)
