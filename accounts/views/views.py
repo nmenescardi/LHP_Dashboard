@@ -6,6 +6,7 @@ from accounts.models import VwapData
 from django.http.response import JsonResponse
 from django.utils import timezone
 from django.shortcuts import render,redirect
+from django.db.models.functions import Lower
 
 class SavingDataIntoDb(APIView):
 
@@ -115,7 +116,6 @@ class DashboardView(View):
     def get(self,request):
 
         try:
-            from django.db.models.functions import Lower
             all_data_list = VwapData.objects.all().order_by(Lower('price_time').desc())
             ticker_list = []
             all_data = []
