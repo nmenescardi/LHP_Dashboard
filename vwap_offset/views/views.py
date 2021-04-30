@@ -85,7 +85,7 @@ class SavingDataIntoDb(APIView):
 
 
             pair, _ = Pair.objects.get_or_create(ticker = ticker)
-            vwap, _ = Vwap.objects.get_or_create(pair = pair, open_dt = open_dt,high = high, low = low, close = close, exchange = exchange, volume = volume, price_time = dateparser.parse(price_time), vwap = vwap)
+            Vwap.objects.create(pair = pair, open_dt = open_dt,high = high, low = low, close = close, exchange = exchange, volume = volume, price_time = dateparser.parse(price_time), vwap = vwap)
             context['message'] = 'Success ! Data has been successfully saved into our database'
             context['status'] = 200
             return JsonResponse(context)
@@ -112,9 +112,9 @@ class DashboardView(View):
             ticker_list = []
             all_data = []
             for one_data in all_data_list:
-                if one_data.ticker not in ticker_list:
+                if one_data.pair.ticker not in ticker_list:
                     all_data.append(one_data)
-                    ticker_list.append(one_data.ticker)
+                    ticker_list.append(one_data.pair.ticker)
 
             return render(request, self.templates_name, locals())
         except Exception as e:

@@ -33,10 +33,6 @@ class Vwap(models.Model):
     class Meta:
         unique_together = ('pair', 'price_time',)
 
-    @property
-    def ticker(self):
-        self.Pair.ticker
-
     def offset(self):
         return self._get_percent_change( self.vwap, self.close )
 
