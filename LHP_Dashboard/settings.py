@@ -13,6 +13,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from decouple import config
 import os
+import environ
+
+
+root = environ.Path(__file__) - 3  # get root of the project
+env = environ.Env()
+environ.Env.read_env()  # reading .env file
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -120,8 +126,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-API_KEY_FOR_SECURITY = '9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b'
-
+API_KEY_FOR_SECURITY = env.str('API_KEY_FOR_SECURITY')
 STATIC_URL = config('STATIC_URL', '/static/')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
@@ -162,6 +167,5 @@ CORS_ALLOW_HEADERS = (
    'token',
     'authkey',
 )
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

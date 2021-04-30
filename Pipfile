@@ -8,6 +8,7 @@ django = "*"
 python-decouple = "*"
 djangorestframework = "*"
 dateparser = "*"
+django-environ = "*"
 
 [dev-packages]
 
