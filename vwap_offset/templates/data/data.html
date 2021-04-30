@@ -22,37 +22,21 @@
                   <table id="datatables-basic" class="table table-striped" style="width:100%">
                      <thead>
                         <tr>
-                           <th>Serial No.</th>
-                           <th>Open</th>
-                           <th>High</th>
-                           <th>Low</th>
-                           <th>Close</th>
-                           <th>Exchange</th>
-                           <th>Ticker</th>
-                           <th>Volume</th>
-                           <th>Price Time</th>
+                           <th>Pair</th>
+                           <th>Current Offset</th>
+                           <th>Price</th>
                            <th>Vwap</th>
-                           <th>Created on</th>
-
+                           <th>Price Time</th>
                         </tr>
                      </thead>
                      <tbody>
-                        {% for one in all_data %}
+                        {% for pair in all_data %}
                         <tr>
-                           <td>{{forloop.counter}}</td>
-                           <td>{{one.open_dt}}</td>
-                           <td>{{one.high}}</td>
-
-                           <td>{{one.low}}</td>
-                           <td>{{one.close}}</td>
-
-                           <td>{{one.exchange}}</td>
-                           <td>{{one.ticker}}</td>
-                           <td>{{one.volume}}</td>
-                           <td>{{one.price_time}}</td>
-                           <td>{{one.vwap}}</td>
-
-                           <td>{{one.created_on}}</td>
+                           <td>{{pair.ticker}}</td>
+                           <td>{{pair.offset}}</td>
+                           <td>{{pair.close}}</td>
+                           <td>{{pair.vwap}}</td>
+                           <td>{{pair.price_time}}</td>
 
                         </tr>
                         {% endfor %}
