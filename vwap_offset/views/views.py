@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from django.views import View
 import ast,sys,json,dateparser
 from django.conf import settings
-from accounts.models import VwapData
+from vwap_offset.models import VwapData
 from django.http.response import JsonResponse
 from django.utils import timezone
 from django.shortcuts import render,redirect

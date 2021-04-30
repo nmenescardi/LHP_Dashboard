@@ -1,5 +1,5 @@
 from django.urls import path
-from accounts.views import * 
+from vwap_offset.views import * 
 
 
 urlpatterns = [

@@ -4,4 +4,4 @@ old_scripts
 *.log
 .env
 test__*
-db.sqlite3
+*.sqlite3
