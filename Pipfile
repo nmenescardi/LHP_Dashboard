@@ -9,6 +9,7 @@ python-decouple = "*"
 djangorestframework = "*"
 dateparser = "*"
 django-environ = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
