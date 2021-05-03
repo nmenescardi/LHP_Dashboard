@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import { baseURL, headers } from './../../utils/services';
 import './Homepage.css';
 
 export default () => {
+  const [pairs, setPairs] = useState([]);
+  const countRef = useRef(0);
+  useEffect(() => {
+    retrieveAllPairs();
+  }, [countRef]);
+  const retrieveAllPairs = () => {
+    axios
+      .get(`${baseURL}/vwap/`)
+      .then((response) => {
+        setPairs(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
   return (
     <main className="content">
       <div className="container-fluid p-0">
@@ -22,12 +40,15 @@ export default () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>BTCUSDTPERP</td>
-                      <td>2.5%</td>
-                      <td>58943</td>
-                      <td>55999</td>
-                    </tr>
+                    {pairs &&
+                      pairs.map((pair, index) => (
+                        <tr key={index}>
+                          <td>{pair.pair}</td>
+                          <td>2.5%</td>
+                          <td>58943</td>
+                          <td>{pair.vwap}</td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
