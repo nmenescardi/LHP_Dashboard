@@ -1,9 +1,9 @@
 from rest_framework import viewsets
-from vwap_offset.models import Vwap
-from vwap_offset.serializers import VwapSerializer
+from vwap_offset.models import Pair
+from vwap_offset.serializers import PairSerializer
 
-class VwapViewSet(viewsets.ModelViewSet):
-    serializer_class = VwapSerializer
+class PairViewSet(viewsets.ModelViewSet):
+    serializer_class = PairSerializer
 
     def get_queryset(self):
-        return Vwap.objects.all()
+        return Pair.objects.all()

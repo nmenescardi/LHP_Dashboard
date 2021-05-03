@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from vwap_offset.models import Vwap
+from vwap_offset.models import Pair
 
-class VwapSerializer(serializers.ModelSerializer):
+class PairSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Vwap
-        fields = ['id', 'pair', 'vwap']
+        model = Pair
+        fields = ['id', 'symbol', 'vwap']

@@ -2,7 +2,6 @@ from rest_framework.views import APIView
 from django.views import View
 import ast,sys,json,dateparser
 from django.conf import settings
-from vwap_offset.models import Vwap
 from vwap_offset.models import Pair
 from django.http.response import JsonResponse
 from django.utils import timezone
@@ -25,9 +24,9 @@ class SavingDataIntoDb(APIView):
                 context['status'] = 403
                 return JsonResponse(context)
 
-            ticker = self.request.data.get('ticker')
-            if not ticker:
-                context['message'] = 'Ticker Field is required'
+            symbol = self.request.data.get('symbol')
+            if not symbol:
+                context['message'] = 'Symbol Field is required'
                 context['status'] = 100
                 return JsonResponse(context)
 
@@ -44,8 +43,7 @@ class SavingDataIntoDb(APIView):
                 return JsonResponse(context)
 
 
-            pair, _ = Pair.objects.get_or_create(ticker = ticker)
-            Vwap.objects.create(pair = pair, price_time = dateparser.parse(price_time), vwap = vwap)
+            Pair.objects.create(symbol = symbol, price_time = dateparser.parse(price_time), vwap = vwap)
             context['message'] = 'Success ! Data has been successfully saved into our database'
             context['status'] = 200
             return JsonResponse(context)
@@ -58,10 +56,7 @@ class SavingDataIntoDb(APIView):
 
 
 
-class DashboardView(View):
-
-    ''' Demonstrate docstring for confirming that this view function will rendering one user permissions''' 
-
+""" class DashboardView(View):
     context = {}
     templates_name = 'data/data.html'
 
@@ -80,3 +75,4 @@ class DashboardView(View):
         except Exception as e:
             print(e)
             return render(request, self.templates_name, locals())
+ """

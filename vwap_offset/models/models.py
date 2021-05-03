@@ -4,50 +4,23 @@ from django.contrib.auth.models import User
 
 
 class Pair(models.Model):
-    ''' Coins '''
-    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    ticker = models.CharField(max_length = 50)
-    created_on = models.DateTimeField(auto_now_add = True)
-    updated_on = models.DateTimeField(auto_now = True)
-
-
-class Price(models.Model):
-    ''' Prices '''
-    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    pair = models.ForeignKey(
-        Pair, 
-        on_delete = models.CASCADE,
-        primary_key = False,
-        null = True
-    )
-    close = models.FloatField()
-    created_on = models.DateTimeField(auto_now_add = True)
-    updated_on = models.DateTimeField(auto_now = True)
-
-
-class Vwap(models.Model):
     ''' Stores and handle data related with VWAP values '''
 
     id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    pair = models.ForeignKey(
-        Pair, 
-        on_delete = models.CASCADE,
-        primary_key = False,
-        null = True
-    )
+    symbol = models.CharField(max_length=50)
     price_time = models.DateTimeField(null = True, blank = True)
     vwap = models.FloatField()
     created_on = models.DateTimeField(auto_now_add = True)
     updated_on = models.DateTimeField(auto_now = True)
     
     class Meta:
-        unique_together = ('pair', 'price_time',)
+        unique_together = ('symbol', 'price_time',)
 
     def offset(self):
-        return self._get_percent_change( self.vwap, self.latest_price() )
+        return 55
 
     def latest_price(self):
-        return Price.objects.filter( pair=self.pair ).latest('created_on').close
+        return 99
 
     def _get_percent_change(self, previous, current):
         """ Helper method to get percentage of change between two numbers"""

@@ -11,7 +11,7 @@ export default () => {
   }, [countRef]);
   const retrieveAllPairs = () => {
     axios
-      .get(`${baseURL}/vwap/`)
+      .get(`${baseURL}/pair/`)
       .then((response) => {
         setPairs(response.data);
         console.log(response.data);
@@ -43,7 +43,7 @@ export default () => {
                     {pairs &&
                       pairs.map((pair, index) => (
                         <tr key={index}>
-                          <td>{pair.pair}</td>
+                          <td>{pair.symbol}</td>
                           <td>2.5%</td>
                           <td>58943</td>
                           <td>{pair.vwap}</td>
