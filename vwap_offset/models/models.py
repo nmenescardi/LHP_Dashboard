@@ -16,15 +16,5 @@ class Pair(models.Model):
     class Meta:
         unique_together = ('symbol', 'price_time',)
 
-    def _get_percent_change(self, previous, current):
-        """ Helper method to get percentage of change between two numbers"""
-        if current == previous or previous == 0:
-            return 0
-
-        change = round((abs(current - previous) / previous) * 100.0, 2)
-        sign = "+" if current >= previous else "-"
-        return sign + str(change) + "%"
-
-
     def __str__(self):
         return ("instance of table-------> {} ".format(self.id))
