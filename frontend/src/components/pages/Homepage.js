@@ -37,6 +37,8 @@ export default () => {
       connection.current.onmessage = (e) => {
         const results = JSON.parse(e.data);
 
+        if (!results) return;
+
         // Update price
         setPairs(
           pairs.map((pair) => {
@@ -75,7 +77,11 @@ export default () => {
                         <tr key={index}>
                           <td>{replaceSymbol(pair.symbol)}</td>
                           <td>{pair.offset || '-'}</td>
-                          <td>{pair.price || '-'}</td>
+                          <td>
+                            {pair.price
+                              ? parseFloat(pair.price).toFixed(3)
+                              : '-'}
+                          </td>
                           <td>{pair.vwap}</td>
                         </tr>
                       ))}
