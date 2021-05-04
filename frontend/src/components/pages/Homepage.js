@@ -3,8 +3,13 @@ import axios from 'axios';
 import { baseURL, headers } from './../../utils/services';
 import './Homepage.css';
 
+const replaceSymbol = (symbol) => {
+  return symbol.replace('USDT', '').replace('PERP', '');
+};
+
 export default () => {
   const [pairs, setPairs] = useState([]);
+  const [prices, setPrices] = useState([]);
   const connection = useRef();
 
   const countRef = useRef(0);
@@ -30,16 +35,10 @@ export default () => {
       connection.current = new WebSocket(
         'wss://fstream.binance.com/ws/!markPrice@arr'
       );
-      connection.current.onopen = () => {
-        //do something, maybe just log that the websocket is open;
-      };
-      connection.current.onclose = () => {
-        //do something, maybe just log that the websocket is closed;
-      };
       connection.current.onmessage = (e) => {
-        const value = e.data;
+        /* const value = e.data;
         console.log(e);
-        console.log(value);
+        console.log(value); */
       };
     }
   });
@@ -66,9 +65,9 @@ export default () => {
                     {pairs &&
                       pairs.map((pair, index) => (
                         <tr key={index}>
-                          <td>{pair.symbol}</td>
-                          <td>2.5%</td>
-                          <td>58943</td>
+                          <td>{replaceSymbol(pair.symbol)}</td>
+                          <td>{pair.offset || '-'}</td>
+                          <td>{pair.price || '-'}</td>
                           <td>{pair.vwap}</td>
                         </tr>
                       ))}
