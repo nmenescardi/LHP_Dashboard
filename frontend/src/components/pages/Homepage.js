@@ -9,7 +9,7 @@ const replaceSymbol = (symbol) => {
 const getPercentChange = (previous, current) => {
   previous = parseFloat(previous);
   current = parseFloat(current);
-  if (current === previous || previous == 0) return 0;
+  if (current === previous || !previous) return 0;
 
   const change = ((Math.abs(current - previous) / previous) * 100.0).toFixed(2);
   const sign = current >= previous ? '+' : '-';
