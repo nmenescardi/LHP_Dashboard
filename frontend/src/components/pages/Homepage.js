@@ -6,6 +6,15 @@ import './Homepage.css';
 const replaceSymbol = (symbol) => {
   return symbol.replace('USDT', '').replace('PERP', '');
 };
+const getPercentChange = (previous, current) => {
+  previous = parseFloat(previous);
+  current = parseFloat(current);
+  if (current === previous || previous == 0) return 0;
+
+  const change = ((Math.abs(current - previous) / previous) * 100.0).toFixed(2);
+  const sign = current >= previous ? '+' : '-';
+  return sign + change + '%';
+};
 
 export default () => {
   const [pairs, setPairs] = useState([]);
@@ -76,7 +85,9 @@ export default () => {
                       pairs.map((pair, index) => (
                         <tr key={index}>
                           <td>{replaceSymbol(pair.symbol)}</td>
-                          <td>{pair.offset || '-'}</td>
+                          <td>
+                            {getPercentChange(pair.vwap, pair.price || 0)}
+                          </td>
                           <td>
                             {pair.price
                               ? parseFloat(pair.price).toFixed(3)
