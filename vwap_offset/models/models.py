@@ -16,12 +16,6 @@ class Pair(models.Model):
     class Meta:
         unique_together = ('symbol', 'price_time',)
 
-    def offset(self):
-        return 55
-
-    def latest_price(self):
-        return 99
-
     def _get_percent_change(self, previous, current):
         """ Helper method to get percentage of change between two numbers"""
         if current == previous or previous == 0:
