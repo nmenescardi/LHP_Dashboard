@@ -9,7 +9,6 @@ const replaceSymbol = (symbol) => {
 
 export default () => {
   const [pairs, setPairs] = useState([]);
-  const [prices, setPrices] = useState([]);
   const connection = useRef();
 
   const countRef = useRef(0);
@@ -36,9 +35,18 @@ export default () => {
         'wss://fstream.binance.com/ws/!markPrice@arr'
       );
       connection.current.onmessage = (e) => {
-        /* const value = e.data;
-        console.log(e);
-        console.log(value); */
+        const results = JSON.parse(e.data);
+
+        // Update price
+        setPairs(
+          pairs.map((pair) => {
+            let result = results.find(
+              (result) => replaceSymbol(pair.symbol) === replaceSymbol(result.s)
+            );
+
+            return result ? { ...pair, price: result.p } : pair;
+          })
+        );
       };
     }
   });
