@@ -29,7 +29,6 @@ export default () => {
       .get(`${baseURL}/pair/`)
       .then((response) => {
         setPairs(response.data);
-        console.log(response.data);
       })
       .catch((e) => {
         console.error(e);
@@ -46,9 +45,8 @@ export default () => {
       connection.current.onmessage = (e) => {
         const results = JSON.parse(e.data);
 
-        if (!results) return;
+        if (!results || !pairs.length) return;
 
-        // Update price
         setPairs(
           pairs.map((pair) => {
             let result = results.find(
@@ -60,7 +58,8 @@ export default () => {
         );
       };
     }
-  });
+  }, [pairs]);
+
   return (
     <main className="content">
       <div className="container-fluid p-0">
