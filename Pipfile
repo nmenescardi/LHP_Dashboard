@@ -10,6 +10,7 @@ djangorestframework = "*"
 dateparser = "*"
 django-environ = "*"
 django-cors-headers = "*"
+gunicorn = "*"
 
 [dev-packages]
 
