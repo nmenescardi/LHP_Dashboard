@@ -1,1 +1,1 @@
-web: gunicorn myproject.wsgi
+web: gunicorn LHP_Dashboard.wsgi --log-file -
