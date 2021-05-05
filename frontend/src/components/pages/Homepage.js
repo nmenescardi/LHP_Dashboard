@@ -92,7 +92,7 @@ export default () => {
                               ? parseFloat(pair.price).toFixed(3)
                               : '-'}
                           </td>
-                          <td>{pair.vwap}</td>
+                          <td>{parseFloat(pair.vwap).toFixed(3)}</td>
                         </tr>
                       ))}
                   </tbody>
