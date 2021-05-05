@@ -16,10 +16,8 @@ class SavingDataIntoDb(APIView):
         try:
             context = {}
             api_key = settings.API_KEY_FOR_SECURITY
-            token_From_request = request.META.get('HTTP_X_API_KEY')
 
-
-            if api_key != token_From_request:
+            if api_key != self.request.data.get('X_API_KEY'):
                 context['message'] = 'Bad Request,Token Not Found!'
                 context['status'] = 403
                 return JsonResponse(context)
