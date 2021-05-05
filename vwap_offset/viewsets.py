@@ -7,7 +7,7 @@ class PairViewSet(viewsets.ModelViewSet):
     serializer_class = PairSerializer
 
     def get_queryset(self):
-        all_pairs_data = Pair.objects.order_by(Lower('price_time').desc())
+        all_pairs_data = Pair.objects.order_by('-price_time')
         single_symbol_list = []
         result = []
         for one_data in all_pairs_data:
