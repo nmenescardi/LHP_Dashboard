@@ -14,6 +14,7 @@ from pathlib import Path
 from decouple import config
 import os
 import environ
+import django_heroku
 
 
 root = environ.Path(__file__) - 3  # get root of the project
@@ -175,3 +176,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/build/static/'),
 ]
+
+django_heroku.settings(locals())
