@@ -10,6 +10,9 @@ export const COLUMNS = [
   {
     Header: 'Current Offset',
     accessor: 'offset',
+    Cell: ({ cell: { value } }) => {
+      return <>{value ? (value > 0 ? '+' + value : value) + '%' : '...'}</>;
+    },
   },
   {
     Header: 'Price',

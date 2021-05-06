@@ -14,8 +14,7 @@ const getPercentChange = (previous, current) => {
   if (current === previous || !previous) return 0;
 
   const change = ((Math.abs(current - previous) / previous) * 100.0).toFixed(2);
-  const sign = current >= previous ? '+' : '-';
-  return sign + change + '%';
+  return current >= previous ? change : change * -1;
 };
 
 export default () => {
