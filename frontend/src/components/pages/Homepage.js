@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { baseURL, headers } from './../../utils/services';
 import './Homepage.css';
+import { Table } from './../table/Table';
 
 const replaceSymbol = (symbol) => {
   return symbol.replace('USDT', '').replace('PERP', '');
 };
+
 const getPercentChange = (previous, current) => {
   previous = parseFloat(previous);
   current = parseFloat(current);
@@ -19,8 +21,8 @@ const getPercentChange = (previous, current) => {
 export default () => {
   const [pairs, setPairs] = useState([]);
   const connection = useRef();
-
   const countRef = useRef(0);
+
   useEffect(() => {
     retrieveAllPairs();
   }, [countRef]);
@@ -28,7 +30,13 @@ export default () => {
     axios
       .get(`${baseURL}/pair/`)
       .then((response) => {
-        setPairs(response.data);
+        const formatted_pairs = response.data.map((pair) => {
+          return {
+            ...pair,
+            symbol: replaceSymbol(pair.symbol),
+          };
+        });
+        setPairs(formatted_pairs);
       })
       .catch((e) => {
         console.error(e);
@@ -53,7 +61,13 @@ export default () => {
               (result) => replaceSymbol(pair.symbol) === replaceSymbol(result.s)
             );
 
-            return result ? { ...pair, price: result.p } : pair;
+            return result
+              ? {
+                  ...pair,
+                  price: result.p,
+                  offset: getPercentChange(pair.vwap, result.p),
+                }
+              : pair;
           })
         );
       };
@@ -70,33 +84,7 @@ export default () => {
                 <h5 className="card-title">Pairs </h5>
               </div>
               <div className="card-body">
-                <table id="datatables-basic" className="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Pair</th>
-                      <th>Current Offset</th>
-                      <th>Price</th>
-                      <th>Vwap</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {pairs &&
-                      pairs.map((pair, index) => (
-                        <tr key={index}>
-                          <td>{replaceSymbol(pair.symbol)}</td>
-                          <td>
-                            {getPercentChange(pair.vwap, pair.price || 0)}
-                          </td>
-                          <td>
-                            {pair.price
-                              ? parseFloat(pair.price).toFixed(3)
-                              : '-'}
-                          </td>
-                          <td>{parseFloat(pair.vwap).toFixed(3)}</td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
+                <Table data={pairs} />
               </div>
             </div>
           </div>
