@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { useTable, useSortBy } from 'react-table';
+import React, { useMemo, useState } from 'react';
+import { useTable, useSortBy, useFilters } from 'react-table';
 import { COLUMNS } from './columns';
 
 export const Table = ({ data }) => {
@@ -12,17 +12,33 @@ export const Table = ({ data }) => {
     headerGroups,
     rows,
     prepareRow,
+    setFilter,
   } = useTable(
     {
       columns,
       data,
       autoResetSortBy: false,
+      autoResetFilters: false,
     },
+    useFilters,
     useSortBy
   );
 
+  const [filterInput, setFilterInput] = useState('');
+
+  const handleFilterChange = (e) => {
+    const value = e.target.value || undefined;
+    setFilter('symbol', value);
+    setFilterInput(value);
+  };
+
   return (
     <>
+      <input
+        value={filterInput}
+        onChange={handleFilterChange}
+        placeholder={'Search symbol'}
+      />
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
