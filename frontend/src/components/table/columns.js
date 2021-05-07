@@ -10,7 +10,7 @@ export const COLUMNS = [
   {
     Header: 'Current Offset',
     accessor: 'offset',
-    sortType: 'basic',
+    sortType: 'number',
     Cell: ({ cell: { value } }) => {
       return <>{value ? (value > 0 ? '+' + value : value) + '%' : '...'}</>;
     },
