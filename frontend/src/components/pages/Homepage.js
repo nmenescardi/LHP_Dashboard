@@ -3,6 +3,9 @@ import axios from 'axios';
 import { baseURL, headers } from './../../utils/services';
 import './Homepage.css';
 import { Table } from './../table/Table';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
 
 const replaceSymbol = (symbol) => {
   return symbol.replace('USDT', '').replace('PERP', '');
@@ -74,21 +77,18 @@ export default () => {
   }, [pairs]);
 
   return (
-    <main className="content">
-      <div className="container-fluid p-0">
-        <div className="row">
-          <div className="col-12">
-            <div className="card">
-              <div className="card-header">
-                <h5 className="card-title">Pairs </h5>
-              </div>
-              <div className="card-body">
-                <Table data={pairs} />
-              </div>
-            </div>
-          </div>
+    <>
+      <CssBaseline />
+      <Container maxWidth="md">
+        <div>
+          <Typography variant="h3" component="h1" gutterBottom>
+            Binance Futures
+          </Typography>
         </div>
-      </div>
-    </main>
+        <div>
+          <Table data={pairs} />
+        </div>
+      </Container>
+    </>
   );
 };
