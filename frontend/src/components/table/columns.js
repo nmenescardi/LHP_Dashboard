@@ -15,6 +15,9 @@ const vwap_styles = (bgColor = bgColors.red) => {
     borderRadius: '7px',
     fontSize: '15px',
     letterSpacing: '0.6px',
+    minWidth: '80px',
+    display: 'inline-block',
+    textAlign: 'center',
   };
 };
 
