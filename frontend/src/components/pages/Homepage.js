@@ -1,15 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import { baseURL, headers } from './../../utils/services';
 import './Homepage.css';
+import fetchAllPairs from './../../utils/fetchAllPairs';
 import { Table } from './../table/Table';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-
-const replaceSymbol = (symbol) => {
-  return symbol.replace('USDT', '').replace('PERP', '');
-};
+import replaceSymbol from './../../utils/replaceSymbol';
 
 const getPercentChange = (previous, current) => {
   previous = parseFloat(previous);
@@ -23,27 +19,10 @@ const getPercentChange = (previous, current) => {
 export default () => {
   const [pairs, setPairs] = useState([]);
   const connection = useRef();
-  const countRef = useRef(0);
 
   useEffect(() => {
-    retrieveAllPairs();
-  }, [countRef]);
-  const retrieveAllPairs = () => {
-    axios
-      .get(`${baseURL}/pair/`)
-      .then((response) => {
-        const formatted_pairs = response.data.map((pair) => {
-          return {
-            ...pair,
-            symbol: replaceSymbol(pair.symbol),
-          };
-        });
-        setPairs(formatted_pairs);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  };
+    fetchAllPairs(setPairs);
+  }, []);
 
   useEffect(() => {
     if (
