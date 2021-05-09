@@ -8,3 +8,5 @@ export const baseURL =
     : 'http://localhost:8000/get';
 
 export const getPairsURL = `${baseURL}/pair/`;
+
+export const wssURL = 'wss://fstream.binance.com/ws/!markPrice@arr';
