@@ -41,7 +41,10 @@ class SavingDataIntoDb(APIView):
                 return JsonResponse(context)
 
 
-            Pair.objects.create(symbol = symbol, price_time = dateparser.parse(price_time), vwap = vwap)
+            Pair.objects.update_or_create(
+                symbol = symbol, 
+                defaults = { 'price_time': dateparser.parse(price_time), 'vwap': vwap }
+            )
             context['message'] = 'Success ! Data has been successfully saved into our database'
             context['status'] = 200
             return JsonResponse(context)
