@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { baseURL } from './services';
+import { getPairsURL } from './services';
 import replaceSymbol from './replaceSymbol';
 
 const fetchAllPairs = (savePairs) => {
   axios
-    .get(`${baseURL}/pair/`) //TODO
+    .get(getPairsURL)
     .then((response) => {
       const formatted_pairs = response.data.map((pair) => {
         return {
