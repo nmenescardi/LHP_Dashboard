@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Homepage.css';
 import fetchAllPairs from './../../utils/fetchAllPairs';
+import replaceSymbol from './../../utils/replaceSymbol';
+import getPercentChange from './../../utils/getPercentChange';
 import { Table } from './../table/Table';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import replaceSymbol from './../../utils/replaceSymbol';
-import getPercentChange from './../../utils/getPercentChange';
 
 export default () => {
   const [pairs, setPairs] = useState([]);
