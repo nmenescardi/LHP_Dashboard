@@ -21,6 +21,7 @@ from django.urls import path, include
 from routers import router
 
 urlpatterns = [
+    path('', TemplateView.as_view(template_name='index.html')),
     path('save/', include('vwap_offset.urls')),
     path('get/', include((router.urls, 'lhpc'), namespace='lhpc'))
 ]
