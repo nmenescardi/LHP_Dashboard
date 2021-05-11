@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import fetchAllPairs from './../../utils/fetchAllPairs';
 import handleWebSocket from './../../utils/handleWebSocket';
 import getNextCallTime from './../../utils/getNextCallTime';
@@ -9,9 +9,9 @@ import Typography from '@material-ui/core/Typography';
 
 export default () => {
   const [pairs, setPairs] = useState([]);
-  const [nextCallTime, setNextCallTime] = useState(getNextCallTime);
   const [shouldFetchPairs, setShouldFetchPairs] = useState(true);
   const connection = useRef();
+  const nextCallTime = useRef(useMemo((_) => getNextCallTime(), []));
 
   useEffect(() => {
     if (shouldFetchPairs) {
@@ -24,11 +24,10 @@ export default () => {
     const ten_seconds = 10000;
     const interval = setInterval(() => {
       const now = new Date();
-      console.log(`now`, now);
-      console.log(`state next call `, nextCallTime);
-      if (now > nextCallTime) {
+
+      if (now > nextCallTime.current) {
         setShouldFetchPairs(true);
-        setNextCallTime(getNextCallTime());
+        nextCallTime.current = getNextCallTime();
       }
     }, ten_seconds);
 
