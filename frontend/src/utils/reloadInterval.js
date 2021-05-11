@@ -1,8 +1,12 @@
-const reloadInterval = (nextCallTime, interval_time = 10000) => {
+const reloadInterval = (
+  nextCallTime,
+  setShouldFetchPairs,
+  interval_time = 10000
+) => {
   return setInterval(() => {
     const now = new Date();
     if (now > nextCallTime.current) {
-      window.location.reload();
+      setShouldFetchPairs(true);
     }
   }, interval_time);
 };
