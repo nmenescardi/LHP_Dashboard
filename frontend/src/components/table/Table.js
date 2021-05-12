@@ -11,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import Spinner from '../common/Spinner';
 
 export const Table = ({ data }) => {
   const columns = useMemo(() => COLUMNS, []);
@@ -45,6 +46,7 @@ export const Table = ({ data }) => {
 
   return (
     <div>
+      <Spinner loading={rows.length === 0} />
       <TableContainer>
         <div className={classes.search}>
           <div
