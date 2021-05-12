@@ -90,10 +90,21 @@ WSGI_APPLICATION = 'LHP_Dashboard.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env.str('MYSQL_DB_NAME'),
+        'USER': env.str('MYSQL_DB_USER'),
+        'PASSWORD': env.str('MYSQL_DB_PASSWORD'),
+        'HOST': env.str('MYSQL_DB_HOST'),
+    }
+}
+""" 
+DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-}
+} 
+"""
 
 
 # Password validation
