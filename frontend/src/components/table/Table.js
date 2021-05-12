@@ -47,19 +47,22 @@ export const Table = ({ data }) => {
     <div>
       <TableContainer>
         <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
+          <div
+            style={{ display: 'flex', alignItems: 'center' }}
+            className={classes.searchIcon}
+          >
+            <SearchIcon style={{ marginRight: '5px' }} />
+            <InputBase
+              value={filterInput}
+              onChange={handleFilterChange}
+              placeholder={'Search symbol'}
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
           </div>
-          <InputBase
-            value={filterInput}
-            onChange={handleFilterChange}
-            placeholder={'Search symbol'}
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-          />
         </div>
 
         <MaUTable {...getTableProps()}>
