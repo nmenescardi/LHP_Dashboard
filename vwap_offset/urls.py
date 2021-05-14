@@ -4,4 +4,5 @@ from vwap_offset.views import *
 
 urlpatterns = [
 	path('vwap-value/',SavingDataIntoDb.as_view(),name = "SavingDataIntoDb"),
+	path('config/', SaveConfig.as_view(),name = "SaveConfig"),
 ]

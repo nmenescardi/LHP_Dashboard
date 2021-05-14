@@ -1,2 +1,2 @@
 from .views import *
-__all__ = ['SavingDataIntoDb']
+__all__ = ['SavingDataIntoDb', 'SaveConfig']

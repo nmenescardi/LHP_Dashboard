@@ -18,3 +18,20 @@ class Pair(models.Model):
 
     def __str__(self):
         return ("instance of table-------> {} ".format(self.id))
+
+
+class Config(models.Model):
+    ''' Config User data '''
+
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    symbol = models.CharField(max_length=50)
+    longoffset = models.FloatField()
+    shortoffset = models.FloatField()
+    lickvalue = models.IntegerField()
+    min_lick_value = models.IntegerField(null = True)
+    percentage_factor = models.FloatField(null = True)
+    created_on = models.DateTimeField(auto_now_add = True)
+    updated_on = models.DateTimeField(auto_now = True)
+    
+    def __str__(self):
+        return ("instance of table-------> {} ".format(self.id))

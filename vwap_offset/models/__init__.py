@@ -1,3 +1,3 @@
-from .models import Pair
+from .models import Pair, Config
 
-__all__ = ['Pair']
+__all__ = ['Pair', 'Config']
