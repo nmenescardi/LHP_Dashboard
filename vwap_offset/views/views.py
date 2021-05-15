@@ -7,6 +7,8 @@ from django.http.response import JsonResponse
 from django.utils import timezone
 from django.shortcuts import render,redirect
 import json
+from django.contrib.auth.decorators import login_required
+from django.middleware.csrf import CsrfViewMiddleware
 
 
 class SavingDataIntoDb(APIView):
@@ -58,16 +60,13 @@ class SavingDataIntoDb(APIView):
 class SaveConfig(APIView):
 
     ''' Save configuration content '''
-
     def post(self, request):
         try:
             context = {}
-            api_key = settings.API_KEY_FOR_SECURITY
-
-            if api_key != self.request.data.get('X_API_KEY'):
-                context['message'] = 'Bad Request,Token Not Found!'
-                context['status'] = 403
-                return JsonResponse(context)
+            reason = CsrfViewMiddleware().process_view(request, None, (), {})
+            if reason:
+                # CSRF failed
+                raise PermissionException()
 
             file_content = self.request.data.get('file_content')
             if not file_content:
@@ -76,8 +75,9 @@ class SaveConfig(APIView):
                 return JsonResponse(context)
 
             config_list = json.loads(file_content)
-
-            #TODO: if pairs property exists, grab it
+            
+            if "coins" in config_list:
+                config_list = config_list['coins']
             
             for config in config_list:
                 Config.objects.create(
@@ -89,12 +89,15 @@ class SaveConfig(APIView):
                     percentage_factor = config.get('percentage_factor', None)
                 )
 
-            context['message'] = 'Config has been saved'
-            context['status'] = 200
-            return JsonResponse(context)
+            return redirect('/')
         except :
             context = {}
             print(sys.exc_info())
             context['message'] = 'An error occurred in saving data, please try again or contact us'
             context['status'] = 500
             return JsonResponse(context)
+
+
+@login_required
+def configFileInput(request):
+    return render(request, 'config/input.html')

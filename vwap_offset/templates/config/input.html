@@ -1,0 +1,11 @@
+<form action="/save/config/" method="post">
+  {% csrf_token %}
+  <label for="file_content">Config: </label><br />
+  <textarea
+    id="file_content"
+    name="file_content"
+    rows="20"
+    cols="80"
+  ></textarea>
+  <input type="submit" value="save" />
+</form>

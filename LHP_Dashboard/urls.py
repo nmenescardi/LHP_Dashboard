@@ -22,6 +22,7 @@ from routers import router
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html')),
+    path('admin/', admin.site.urls),
     path('save/', include('vwap_offset.urls')),
     path('get/', include((router.urls, 'lhpc'), namespace='lhpc'))
 ]
