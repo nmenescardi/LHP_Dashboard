@@ -17,10 +17,11 @@ const mergeState = (pairsPrice, pairsVwap, setPairs, pairsConfig) => {
       );
 
       const offset = getPercentChange(pair_vwap.vwap, pair_price.price);
-      const delta =
-        offset >= 0
+      const delta = pair_config
+        ? offset >= 0
           ? offset - pair_config.longoffset
-          : (offset + pair_config.shortoffset) * -1;
+          : (offset + pair_config.shortoffset) * -1
+        : 0;
 
       return {
         symbol: replaceSymbol(pair_vwap.symbol),
