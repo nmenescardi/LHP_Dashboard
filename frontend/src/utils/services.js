@@ -9,4 +9,6 @@ export const baseURL =
 
 export const getPairsURL = `${baseURL}/pair/`;
 
+export const getConfigURL = `${baseURL}/config/`;
+
 export const wssURL = 'wss://fstream.binance.com/ws/!markPrice@arr';

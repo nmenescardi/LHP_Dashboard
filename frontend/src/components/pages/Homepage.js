@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import fetchAllPairs from './../../utils/fetchAllPairs';
+import fetchConfiguration from './../../utils/fetchConfiguration';
 import handleWebSocket from './../../utils/handleWebSocket';
 import getNextCallTime from './../../utils/getNextCallTime';
 import reloadInterval from './../../utils/reloadInterval';
@@ -13,6 +14,7 @@ export default () => {
   const [pairs, setPairs] = useState([]);
   const [pairsVwap, setPairsVwap] = useState([]);
   const [pairsPrice, setPairsPrice] = useState([]);
+  const [pairsConfig, setPairsConfig] = useState([]);
   const [shouldFetchPairs, setShouldFetchPairs] = useState(true);
   const connection = useRef();
   const nextCallTime = useRef(useMemo((_) => getNextCallTime(), []));
@@ -24,12 +26,16 @@ export default () => {
   }, [shouldFetchPairs]);
 
   useEffect(() => {
+    fetchConfiguration(setPairsConfig);
+  }, []);
+
+  useEffect(() => {
     // It runs every 3 seconds
     handleWebSocket(connection, setPairsPrice);
   }, []);
 
   useEffect(() => {
-    mergeState(pairsPrice, pairsVwap, setPairs);
+    mergeState(pairsPrice, pairsVwap, setPairs, pairsConfig);
   }, [pairsVwap, pairsPrice]);
 
   useEffect(() => {

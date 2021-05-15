@@ -50,6 +50,29 @@ export const COLUMNS = [
     },
   },
   {
+    Header: 'Delta',
+    accessor: 'delta',
+    Cell: ({ cell: { value: delta } }) => {
+      let cell_value, styles;
+      if (delta) {
+        delta = delta.toFixed(2);
+        if (delta > 0) {
+          cell_value = '+' + delta;
+          styles = vwap_styles(bgColors.green);
+        } else {
+          cell_value = delta;
+          styles = vwap_styles();
+        }
+        cell_value = cell_value + '%';
+      } else {
+        cell_value = '...';
+        styles = {};
+      }
+
+      return <span style={styles}>{cell_value}</span>;
+    },
+  },
+  {
     Header: 'Price',
     accessor: 'price',
     Cell: roundCellValue,
