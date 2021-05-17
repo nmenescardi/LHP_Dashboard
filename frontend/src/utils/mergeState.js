@@ -19,8 +19,8 @@ const mergeState = (pairsPrice, pairsVwap, setPairs, pairsConfig) => {
       const offset = getPercentChange(pair_vwap.vwap, pair_price.price);
       const delta = pair_config
         ? offset >= 0
-          ? offset - pair_config.longoffset
-          : (offset + pair_config.shortoffset) * -1
+          ? offset - pair_config.shortoffset
+          : (offset + pair_config.longoffset) * -1
         : 0;
 
       return {
