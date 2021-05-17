@@ -52,6 +52,7 @@ export const COLUMNS = [
   {
     Header: 'Delta',
     accessor: 'delta',
+    sortType: 'basic',
     Cell: ({ cell: { value: delta } }) => {
       let cell_value, styles;
       if (delta) {
